@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import axios from 'axios';
-import { ResponseCreateHistory } from './interface';
+import { ResponseHistory, ResponseHistories } from './interface';
 import { Status } from './enum';
 import { QueryDto } from './dto';
 
@@ -31,7 +31,7 @@ export class HistoryService {
     }
   }
 
-  async createHistory(dto: QueryDto): Promise<ResponseCreateHistory> {
+  async createHistory(dto: QueryDto): Promise<ResponseHistory> {
     try {
       const { city } = dto;
       const check = await this.checkCity(city.toLocaleLowerCase());
@@ -61,6 +61,25 @@ export class HistoryService {
       } else {
         throw new InternalServerErrorException();
       }
+    }
+  }
+
+  async findAllHistory(): Promise<ResponseHistories> {
+    try {
+      const data = await this.prisma.history.findMany();
+      const newData = data.map((el) => {
+        return {
+          ...el,
+          response: JSON.parse(el.response),
+        };
+      });
+      return {
+        status: Status.SUCCESS,
+        message: 'Success get data',
+        data: newData,
+      };
+    } catch (error) {
+      throw new InternalServerErrorException();
     }
   }
 }
