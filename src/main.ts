@@ -11,9 +11,7 @@ async function bootstrap() {
   //   next();
   // });
   app.enableCors({
-    origin: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type, Accept',
+    origin: 'http://localhost:3000',
   });
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
