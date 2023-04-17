@@ -10,9 +10,9 @@ async function bootstrap() {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
     next();
   });
-  // app.enableCors({
-  //   origin: '*',
-  // });
+  app.enableCors({
+    origin: true,
+  });
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }
