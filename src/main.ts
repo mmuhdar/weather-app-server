@@ -14,6 +14,7 @@ async function bootstrap() {
   //   allowedHeaders: '*',
   //   origin: ['https://weather-app-mmuhdar.vercel.app', 'http://localhost:3000'],
   // });
+  app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }
